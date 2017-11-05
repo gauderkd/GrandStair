@@ -1,5 +1,14 @@
 #:kivy 1.10.0
+<Controller>:
+	lbl: my_label
 
-BoxLayout:
-    Label:
-        text: 'Under Construction'
+	BoxLayout:
+		orientation: 'vertical'
+	    Label:
+	    	id: my_label
+	        text: 'Slider!'
+	    Slider:
+	    	min: 1
+	    	max: 30
+	    	on_value: root.new_thickness(*args)
+
