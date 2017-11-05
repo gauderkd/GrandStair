@@ -1,9 +1,7 @@
 import os
 import pygame
 import glob
-
 from random import choice
-from psychopy import visual, event, core, gui
 
 
 def draw_ins(window, word, colour, skipkeys=['space']):
