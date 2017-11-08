@@ -1,0 +1,48 @@
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+MyScreenManager:
+    transition: NoTransition()
+    IntroScreen:
+    ResponseScreen:
+    ExitScreen:
+
+<IntroScreen>:
+    name: 'intro'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Welcome to the experiment!'
+            font_size: 30
+        Button:
+            text: 'Go To Trial'
+            font_size: 30
+            on_release: app.root.current = 'response'
+
+<ResponseScreen>:
+    name: 'response'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Rating: %s' % round(slider.value, 1) if slider.value else 'Please use slider to input rating'
+            font_size: 30
+        Slider:
+            id: slider
+            min: 1
+            max: 7
+            value: 1
+            on_value: root.slide_response(*args)
+        Button:
+            text: 'Submit Response'
+            font_size: 30
+            on_release: app.root.current = 'exit'
+
+<ExitScreen>:
+    name: 'exit'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Experiment finished! Please exit'
+            font_size: 30
+        Button:
+            text: 'Exit'
+            font_size: 30
+            on_release: app.stop()

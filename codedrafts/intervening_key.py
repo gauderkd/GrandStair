@@ -1,10 +1,8 @@
 # TODO: How do we have Kivy run alongside our python function?
 
 import os
-import pygame as pg
 from random import shuffle
 
-pg.init()
 keys = ['a', 'bb', 'b', 'c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab']
 
 def play_stim(stimulus):
