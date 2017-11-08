@@ -1,6 +1,5 @@
 # TODO: How do we have Kivy run alongside our python function?
 
-
 import os
 import pygame as pg
 from random import shuffle
@@ -9,11 +8,12 @@ pg.init()
 keys = ['a', 'bb', 'b', 'c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab']
 
 def play_stim(stimulus):
-	pg.mixer.music.load(stimulus)
-	pg.mixer.music.play()
+	print(stimulus)
+	# pg.mixer.music.load(stimulus)
+	# pg.mixer.music.play()
 
-	while pg.mixer.music.get_busy():
-		pg.time.wait(50)
+	# while pg.mixer.music.get_busy():
+	# 	pg.time.wait(50)
 
 def play_stim_set(stimulus_list):
 	for stim in stimulus_list:
@@ -79,14 +79,3 @@ def generate_random_stimuli_set():
 	return stim_master
 
 ###
-
-# Create stimuli set
-stim_master = generate_random_stimuli_set()
-
-# Experiment Loop
-for i, pair in enumerate(stim_master[0]):
-	stimulus_name = stim_master[1][pair]
-	probe_name = stim_master[2][pair]
-	# play_stim_set([stimulus_name, probe_name]) <- NEEDS FILES TO RUN
-	print(stimulus_name, probe_name)
-
