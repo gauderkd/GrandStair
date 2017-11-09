@@ -2,6 +2,8 @@
 MyScreenManager:
     transition: NoTransition()
     IntroScreen:
+    SetupTrialScreen:
+    RunTrialScreen:
     ResponseScreen:
     ExitScreen:
 
@@ -13,7 +15,37 @@ MyScreenManager:
             text: 'Welcome to the experiment!'
             font_size: 30
         Button:
-            text: 'Go To Trial'
+            text: 'Set up Trial'
+            font_size: 30
+            on_release: app.root.current = 'setup'
+
+<SetupTrialScreen>:
+    name: 'setup'
+    lbl: stimulus_label
+
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: stimulus_label
+            text: 'Stimulus'
+            font_size: 30
+        Button:
+            text: 'Run Trial'
+            font_size: 30
+            on_release: app.root.current = 'run'
+
+<RunTrialScreen>:
+    name: 'run'
+    lbl: message
+
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: message
+            text: 'Trial is running!'
+            font_size: 30
+        Button:
+            text: 'Input response'
             font_size: 30
             on_release: app.root.current = 'response'
 
@@ -33,7 +65,7 @@ MyScreenManager:
         Button:
             text: 'Submit Response'
             font_size: 30
-            on_release: app.root.current = 'exit'
+            on_release: root.gotoExit()
 
 <ExitScreen>:
     name: 'exit'
