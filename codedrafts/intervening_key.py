@@ -2,6 +2,7 @@
 
 import os
 from random import shuffle
+import csv
 
 keys = ['a', 'bb', 'b', 'c', 'db', 'd', 'eb', 'e', 'f', 'gb', 'g', 'ab']
 
@@ -50,23 +51,33 @@ def generate_pilot1_list():
 
 	for i, key in enumerate(keys):
 		next_key_index = (i+4)%2
-		list_of_stimuli.append(generate_stim_name(key, keys[next_key_index], time, events, IOI))
-		list_of_stimuli.append(generate_stim_name(key, 'whole', time, events, IOI))
-		list_of_probes.append(generate_probe_name(key))
+		next_key = keys[next_key_index]
+
+		stimuli1_name = generate_stim_name(key, next_key, time, events, IOI)
+		stimuli2_name = generate_stim_name(key, 'whole', time, events, IOI)
+		probe_name = generate_probe_name(key)
+
+		list_of_stimuli.append([stimuli1_name, key, next_key, time, events, IOI])
+		list_of_stimuli.append([stimuli2_name, key, 'whole', time, events, IOI])
+		list_of_probes.append([probe_name, key])
 	return list_of_stimuli, list_of_probes
 
 def generate_random_stimuli_set():
 	stimuli, probes = generate_pilot1_list()
 
-	stim_master = [[],[],[]]
+	stim_master = [[],[],[],[],[],[],[],[],[]] # stim_name, probe_name, key1, key2, time, events, IOI, probe_key
 	# col1 = index, col2 = stimulus name, col3 = probe name
 
 	index = 0
 	for s in stimuli:
 		for p in probes:
 			stim_master[0].append(index)
-			stim_master[1].append(s)
-			stim_master[2].append(p)
+			stim_master[1].append(s[0])
+			stim_master[2].append(p[0])
+			for i in range(3,8):
+				stim_master[i].append(s[(i-3)+1])
+			stim_master[8].append(p[1])
+
 			index += 1
 	shuffle(stim_master[0])
 
@@ -77,3 +88,18 @@ def generate_random_stimuli_set():
 	return stim_master
 
 ###
+
+def create_csv_of_stimuli():
+	stim_master = generate_random_stimuli_set()
+	
+	with open('stimuli_list.csv', 'a', newline='') as csvfile:
+		writer = csv.writer(csvfile)
+		writer.writerow(['Random_index','Stimuli_name', 'Probe_name', 'Key_1', 'Key_2', 'Time', 'Events', 'IOI', 'Proke_key'])
+
+		for i in range(0, len(stim_master[0])):
+
+			row = []
+			for stim in stim_master:
+				row.append(stim[i])
+			writer.writerow(row)
+	print('file saved!')
